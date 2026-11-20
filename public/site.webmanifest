@@ -1,0 +1,21 @@
+{
+  "name": "Klien Codes",
+  "short_name": "Klien Codes",
+  "description": "Practical IT Consultancy, Cloud, Security & Software Engineering by Team Klien Codes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070707",
+  "theme_color": "#070707",
+  "icons": [
+    {
+      "src": "/assets/logo/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logo/logo-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

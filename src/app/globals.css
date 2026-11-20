@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Klien Codes — Pure Black & Cherry Red Editorial Theme
+   ========================================================================== */
+:root {
+  --bg-canvas: #faf8f8;
+  --bg-surface-1: #ffffff;
+  --bg-surface-2: #f4efef;
+  --border-subtle: #e7dede;
+  --border-strong: #d4c4c6;
+  --text-primary: #0f0d0d;
+  --text-secondary: #54494a;
+  --text-muted: #786a6c;
+  --accent-primary: #b91c1c;
+  --accent-primary-hover: #991b1b;
+  --accent-secondary: #7f1d1d;
+  --accent-text: #b91c1c;
+  --status-success: #15803d;
+  --status-warning: #b45309;
+  --status-error: #b91c1c;
+
+  --background: #faf8f8;
+  --foreground: #0f0d0d;
+  --card: #ffffff;
+  --card-foreground: #0f0d0d;
+  --popover: #ffffff;
+  --popover-foreground: #0f0d0d;
+  --primary: #b91c1c;
+  --primary-foreground: #ffffff;
+  --secondary: #f4efef;
+  --secondary-foreground: #0f0d0d;
+  --muted: #f4efef;
+  --muted-foreground: #54494a;
+  --accent: #fef2f2;
+  --accent-foreground: #7f1d1d;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: #e7dede;
+  --input: #d4c4c6;
+  --ring: #b91c1c;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --bg-canvas: #070707;
+  --bg-surface-1: #110f10;
+  --bg-surface-2: #1a1516;
+  --border-subtle: #2b2224;
+  --border-strong: #423336;
+  --text-primary: #f5f2f2;
+  --text-secondary: #a89f9f;
+  --text-muted: #786d6e;
+  --accent-primary: #dc2626;
+  --accent-primary-hover: #991b1b;
+  --accent-secondary: #7f1d1d;
+  --accent-text: #ef4444;
+  --status-success: #22c55e;
+  --status-warning: #f59e0b;
+  --status-error: #ef4444;
+
+  --background: #070707;
+  --foreground: #f5f2f2;
+  --card: #110f10;
+  --card-foreground: #f5f2f2;
+  --popover: #110f10;
+  --popover-foreground: #f5f2f2;
+  --primary: #dc2626;
+  --primary-foreground: #fafafa;
+  --secondary: #1a1516;
+  --secondary-foreground: #f5f2f2;
+  --muted: #1a1516;
+  --muted-foreground: #a89f9f;
+  --accent: #261416;
+  --accent-foreground: #f5f2f2;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --border: #2b2224;
+  --input: #423336;
+  --ring: #dc2626;
+}
+
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.025em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+}
+
+.font-display {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-sans {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+.bg-blueprint-grid {
+  background-image: radial-gradient(rgba(220, 38, 38, 0.14) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.hero-glow {
+  background: radial-gradient(
+    ellipse 75% 48% at 50% 0%,
+    rgba(220, 38, 38, 0.16),
+    rgba(127, 29, 29, 0.06) 48%,
+    transparent 78%
+  );
+}
+
+.glass-nav {
+  background-color: color-mix(in srgb, var(--bg-canvas) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.25);
+  }
+}
+
+.animate-status-dot {
+  animation: pulse-dot 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.animate-loading-bar {
+  animation: loading-shimmer 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-status-dot,
+  .animate-loading-bar {
+    animation: none;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,26 @@
+---
+title: "Multi-Region Cloud Migration for a B2B SaaS Platform"
+slug: "cloud-migration-blueprint"
+industry: "B2B SaaS"
+servicePillar: "Cloud Architecture"
+duration: "6 Weeks"
+thumbnail: "/assets/case-studies/case-01-thumb.webp"
+challenge: "Legacy single-region virtual machines caused risky maintenance windows, configuration drift, and unpredictable compute spend during traffic spikes."
+architecture: "Designed a Terraform-managed multi-AZ AWS landing zone with automated EKS autoscaling, isolated private subnets, and blue/green DNS cutover."
+outcome: "Reference Architecture Blueprint — replace with verified client metrics (e.g., cutover downtime, cloud cost reduction, and deployment frequency) once published."
+stack: ["AWS", "Terraform", "Kubernetes", "Cloudflare", "PostgreSQL"]
+isReferenceBlueprint: true
+---
+
+## Context & Bottleneck
+Early-stage infrastructure grown through manual console changes eventually reaches an inflection point: deployments become fragile, staging diverges from production, and enterprise prospects begin asking hard questions about disaster recovery and uptime SLAs.
+
+## Target Architecture Decisions
+1. **Isolated Multi-Account Landing Zone:** Separated production, staging, and shared security/logging accounts to enforce strict blast-radius isolation.
+2. **100% Reproducible IaC:** Codified VPC networking, NAT gateways, IAM roles, and managed Kubernetes node groups into versioned Terraform modules.
+3. **Zero-Downtime Cutover Pattern:** Used logical database replication and weighted DNS routing to shift production traffic incrementally with instant rollback capability.
+
+## Key Deliverables & Handover
+- Complete Terraform module repository with CI plan/apply workflows.
+- Architecture Decision Records (ADRs) documenting compute sizing and networking trade-offs.
+- Incident response and disaster-recovery failover runbooks tested with the engineering team.

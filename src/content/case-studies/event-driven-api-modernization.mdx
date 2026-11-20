@@ -1,0 +1,26 @@
+---
+title: "Decomposing a Legacy Monolith into an Event-Driven API"
+slug: "event-driven-api-modernization"
+industry: "Logistics & Operations"
+servicePillar: "Software Modernization"
+duration: "8 Weeks"
+thumbnail: "/assets/case-studies/case-03-thumb.webp"
+challenge: "Synchronous webhook processing and unindexed database queries inside a tightly coupled monolith caused cascading API timeouts during peak load."
+architecture: "Introduced an API gateway boundary, decoupled async workers over a durable event bus, added Redis read-through caching, and instrumented OpenTelemetry tracing."
+outcome: "Reference Architecture Blueprint — replace with verified p99 latency, throughput, and incident-reduction metrics once published."
+stack: ["TypeScript", "Node.js", "PostgreSQL", "Redis", "OpenTelemetry"]
+isReferenceBlueprint: true
+---
+
+## Context & Bottleneck
+Full rewrites rarely succeed on schedule. Instead of halting feature delivery for a year, the goal was to relieve database lock contention and isolate bursty background workloads incrementally.
+
+## Target Architecture Decisions
+1. **Strangler-Fig Extraction:** Carved out webhook ingestion and report generation behind clean API contracts while keeping core domain logic stable.
+2. **Durable Async Queues & Idempotency:** Replaced fragile in-request retries with idempotent background consumers and dead-letter alerting.
+3. **End-to-End Trace Visibility:** Added OpenTelemetry tracing across API gateway, workers, and PostgreSQL queries to pinpoint latency regressions immediately.
+
+## Key Deliverables & Handover
+- Phased modernization RFC and API contract specifications.
+- Production worker service template with graceful shutdown and retry policies.
+- Latency/SLO dashboards and database indexing playbook.

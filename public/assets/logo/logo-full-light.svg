@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 44" fill="none">
+  <defs>
+    <linearGradient id="kcGradL" x1="4" y1="4" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#B91C1C"/>
+      <stop offset="100%" stop-color="#7F1D1D"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="40" height="40" rx="10" fill="#FFFFFF" stroke="#E7DEDE" stroke-width="1.5"/>
+  <path d="M22 10L33 16.3V28.9L22 35.2L11 28.9V16.3L22 10Z" stroke="url(#kcGradL)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M22 10V22.6M22 22.6L33 16.3M22 22.6L11 28.9" stroke="url(#kcGradL)" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="22" cy="22.6" r="3" fill="#B91C1C"/>
+  <text x="54" y="21" fill="#0F0D0D" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" letter-spacing="0.08em">KLIEN CODES</text>
+  <text x="54" y="36" fill="#B91C1C" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="600" letter-spacing="0.14em">IT CONSULTANCY</text>
+</svg>

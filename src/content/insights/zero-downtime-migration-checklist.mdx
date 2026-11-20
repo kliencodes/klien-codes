@@ -1,0 +1,20 @@
+---
+title: "The Pre-Flight Checklist for Zero-Downtime Cloud Migrations"
+slug: "zero-downtime-migration-checklist"
+summary: "A practical engineering checklist covering dependency mapping, dual-write pitfalls, DNS TTL prep, and rollback triggers before touching production traffic."
+date: "2026-11-15"
+category: "Cloud Architecture"
+readingTime: "6 min read"
+---
+
+## Why Migrations Fail in the Final 10%
+Most cloud migration outages do not happen during infrastructure provisioning—they happen during DNS cutover, connection-pool exhaustion, or missed third-party IP allowlists.
+
+## 1. Lower DNS TTLs 48 Hours Early
+Before cutover day, lower TTL values on critical A/AAAA/CNAME records to `60` seconds so rollback propagation happens in minutes rather than hours.
+
+## 2. Verify Egress IPs & Webhook Allowlists
+Enterprise payment gateways, banking APIs, and partner firewalls often enforce strict IP allowlists. Provision dedicated NAT Gateway Elastic IPs in your target VPC and register them with vendors ahead of time.
+
+## 3. Rehearse the Rollback Before the Cutover
+A rollback plan that has never been tested in staging is a hypothesis, not a safety net. Define objective abort thresholds (error rate, p99 latency, replication lag) and verify traffic can swing back cleanly.

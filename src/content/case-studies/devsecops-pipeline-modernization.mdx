@@ -1,0 +1,26 @@
+---
+title: "Zero-Trust CI/CD & SOC 2 Technical Readiness"
+slug: "devsecops-pipeline-modernization"
+industry: "FinTech / Regulated SaaS"
+servicePillar: "Cybersecurity & DevSecOps"
+duration: "4 Weeks"
+thumbnail: "/assets/case-studies/case-02-thumb.webp"
+challenge: "Static cloud access keys stored in CI secrets, unverified third-party container layers, and manual approval gaps stalled enterprise security reviews."
+architecture: "Migrated CI/CD to short-lived OIDC federation, added automated SAST, SBOM generation, and container vulnerability gates with immutable audit logs."
+outcome: "Reference Architecture Blueprint — replace with verified audit readiness timeline and vulnerability remediation metrics once published."
+stack: ["GitHub Actions", "OIDC", "Trivy", "HashiCorp Vault", "Terraform"]
+isReferenceBlueprint: true
+---
+
+## Context & Bottleneck
+Enterprise buyers increasingly require verifiable supply-chain security and least-privilege access controls before signing annual contracts. Long-lived IAM keys in CI pipelines represent one of the highest-impact cloud risks.
+
+## Target Architecture Decisions
+1. **Keyless OIDC Federation:** Eliminated static cloud keys by federating GitHub Actions directly with cloud IAM using branch-scoped trust policies.
+2. **Automated Security Gates:** Integrated SAST, dependency auditing, SBOM generation, and container image scanning directly into pull-request workflows.
+3. **Audit-Ready Evidence Trail:** Enforced signed releases, peer-reviewed infrastructure changes, and centralized immutable logging for SOC 2 / ISO 27001 readiness.
+
+## Key Deliverables & Handover
+- Hardened reusable CI/CD workflow templates.
+- IAM least-privilege policy baseline and secrets rotation runbook.
+- Mapped technical controls checklist for external auditors.
