@@ -1,8 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
 import crypto from "crypto";
+import { neon } from "@neondatabase/serverless";
 
-// Uses local ./data on your Linux server/PC, and safely falls back to /tmp on read-only serverless hosts like Vercel
 const DATA_DIR = process.env.VERCEL
   ? path.join("/tmp", "klien-codes-data")
   : path.join(process.cwd(), "data");
@@ -28,23 +28,64 @@ export interface StoredBrief {
   brief: string;
 }
 
-async function appendJsonRecord<T>(filename: string, record: T): Promise<T> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  const filePath = path.join(DATA_DIR, filename);
+function getSql() {
+  const url = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+  return url ? neon(url) : null;
+}
 
-  let existing: T[] = [];
+let tablesReady = false;
+
+async function ensureTables() {
+  const sql = getSql();
+  if (!sql || tablesReady) return;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS quick_queries (
+      id TEXT PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      query TEXT NOT NULL
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS project_briefs (
+      id TEXT PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      company TEXT,
+      services JSONB NOT NULL DEFAULT '[]'::jsonb,
+      engagement_model TEXT NOT NULL,
+      timeline TEXT NOT NULL,
+      budget_range TEXT NOT NULL,
+      brief TEXT NOT NULL
+    )
+  `;
+
+  tablesReady = true;
+}
+
+async function readLocalJson<T>(filename: string): Promise<T[]> {
   try {
-    const raw = await fs.readFile(filePath, "utf8");
+    const raw = await fs.readFile(path.join(DATA_DIR, filename), "utf8");
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      existing = parsed;
-    }
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
-    // Start fresh array if file does not exist yet
+    return [];
   }
+}
 
+async function appendLocalJson<T>(filename: string, record: T): Promise<T> {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+  const existing = await readLocalJson<T>(filename);
   existing.unshift(record);
-  await fs.writeFile(filePath, JSON.stringify(existing, null, 2), "utf8");
+  await fs.writeFile(
+    path.join(DATA_DIR, filename),
+    JSON.stringify(existing, null, 2),
+    "utf8"
+  );
   return record;
 }
 
@@ -58,7 +99,18 @@ export async function saveQuickQuery(input: {
     createdAt: new Date().toISOString(),
     ...input,
   };
-  return appendJsonRecord("queries.json", record);
+
+  const sql = getSql();
+  if (sql) {
+    await ensureTables();
+    await sql`
+      INSERT INTO quick_queries (id, created_at, name, email, query)
+      VALUES (${record.id}, ${record.createdAt}, ${record.name}, ${record.email}, ${record.query})
+    `;
+    return record;
+  }
+
+  return appendLocalJson("queries.json", record);
 }
 
 export async function saveProjectBrief(input: {
@@ -76,5 +128,82 @@ export async function saveProjectBrief(input: {
     createdAt: new Date().toISOString(),
     ...input,
   };
-  return appendJsonRecord("briefs.json", record);
+
+  const sql = getSql();
+  if (sql) {
+    await ensureTables();
+    await sql`
+      INSERT INTO project_briefs (
+        id, created_at, name, email, company, services,
+        engagement_model, timeline, budget_range, brief
+      )
+      VALUES (
+        ${record.id},
+        ${record.createdAt},
+        ${record.name},
+        ${record.email},
+        ${record.company || ""},
+        ${JSON.stringify(record.services)}::jsonb,
+        ${record.engagementModel},
+        ${record.timeline},
+        ${record.budgetRange},
+        ${record.brief}
+      )
+    `;
+    return record;
+  }
+
+  return appendLocalJson("briefs.json", record);
+}
+
+export async function getAllQueries(): Promise<StoredQuery[]> {
+  const sql = getSql();
+  if (sql) {
+    await ensureTables();
+    const rows = await sql`
+      SELECT id, created_at, name, email, query
+      FROM quick_queries
+      ORDER BY created_at DESC
+      LIMIT 200
+    `;
+    return rows.map((r) => ({
+      id: String(r.id),
+      createdAt: new Date(String(r.created_at)).toISOString(),
+      name: String(r.name),
+      email: String(r.email),
+      query: String(r.query),
+    }));
+  }
+  return readLocalJson<StoredQuery>("queries.json");
+}
+
+export async function getAllBriefs(): Promise<StoredBrief[]> {
+  const sql = getSql();
+  if (sql) {
+    await ensureTables();
+    const rows = await sql`
+      SELECT id, created_at, name, email, company, services,
+             engagement_model, timeline, budget_range, brief
+      FROM project_briefs
+      ORDER BY created_at DESC
+      LIMIT 200
+    `;
+    return rows.map((r) => ({
+      id: String(r.id),
+      createdAt: new Date(String(r.created_at)).toISOString(),
+      name: String(r.name),
+      email: String(r.email),
+      company: r.company ? String(r.company) : "",
+      services: Array.isArray(r.services) ? r.services.map(String) : [],
+      engagementModel: String(r.engagement_model),
+      timeline: String(r.timeline),
+      budgetRange: String(r.budget_range),
+      brief: String(r.brief),
+    }));
+  }
+  return readLocalJson<StoredBrief>("briefs.json");
+}
+
+export function isPostgresConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL || process.env.POSTGRES_URL);
 }
