@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Check, Copy, Mail } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { ArrowRight, Check, Copy, Mail, MessageCircle } from "lucide-react";
+import { getWhatsAppUrl, siteConfig } from "@/config/site";
 import { copyToClipboard } from "@/lib/utils";
 import { Reveal } from "@/components/motion/Reveal";
 
@@ -29,8 +29,8 @@ export function FinalCtaBand() {
             Have an IT Project or Question? Talk to {siteConfig.teamName}.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm text-[var(--text-secondary)] sm:text-base">
-            Send us an email directly or submit your query on our website—
-            {siteConfig.teamName} replies within 1 business day.
+            Chat with us on WhatsApp, send us an email, or submit your query on
+            our website—{siteConfig.teamName} replies within 1 business day.
           </p>
 
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
@@ -41,6 +41,16 @@ export function FinalCtaBand() {
               <span>Send Query / Project Brief</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+
+            <a
+              href={getWhatsAppUrl("Hi Team Klien Codes, I'd like to discuss a project.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-[var(--border-strong)] bg-[var(--bg-canvas)] px-5 text-sm font-medium text-[var(--text-primary)] transition-all hover:border-[var(--accent-primary)] active:scale-[0.98]"
+            >
+              <MessageCircle className="h-4 w-4 text-[var(--accent-text)]" />
+              <span>WhatsApp</span>
+            </a>
 
             <a
               href={`mailto:${siteConfig.contactEmail}`}

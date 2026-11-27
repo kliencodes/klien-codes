@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check, Copy, Mail } from "lucide-react";
+import { Check, Copy, Mail, MessageCircle } from "lucide-react";
 import { footerColumns } from "@/config/navigation";
-import { siteConfig } from "@/config/site";
+import { getWhatsAppUrl, siteConfig } from "@/config/site";
 import { Logo } from "@/components/brand/Logo";
 import { AvailabilityBadge } from "@/components/brand/AvailabilityBadge";
 import { copyToClipboard } from "@/lib/utils";
@@ -68,18 +68,30 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="space-y-3.5 lg:col-span-3">
+          <div className="space-y-3 lg:col-span-3">
             <h3 className="font-mono text-xs font-semibold tracking-wider text-[var(--text-muted)] uppercase">
               Contact {siteConfig.teamName}
             </h3>
 
-            <a
-              href={`mailto:${siteConfig.contactEmail}`}
-              className="inline-flex min-h-[40px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent-primary)] px-3.5 text-xs font-semibold text-[#FAFAFA] transition-colors hover:bg-[var(--accent-primary-hover)] sm:w-auto"
-            >
-              <Mail className="h-4 w-4" />
-              <span>Email {siteConfig.teamName}</span>
-            </a>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={getWhatsAppUrl("Hi Team Klien Codes, I have an inquiry.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-lg bg-[var(--accent-primary)] px-3.5 text-xs font-semibold text-[#FAFAFA] transition-colors hover:bg-[var(--accent-primary-hover)]"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>WhatsApp</span>
+              </a>
+
+              <a
+                href={`mailto:${siteConfig.contactEmail}`}
+                className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-lg border border-[var(--border-strong)] bg-[var(--bg-surface-2)] px-3.5 text-xs font-semibold text-[var(--text-primary)] transition-colors hover:border-[var(--accent-primary)]"
+              >
+                <Mail className="h-4 w-4 text-[var(--accent-text)]" />
+                <span>Email</span>
+              </a>
+            </div>
 
             <button
               type="button"

@@ -19,12 +19,12 @@ export function Logo({ compact = false, className }: LogoProps) {
     setMounted(true);
   }, []);
 
-  const isLight = mounted && resolvedTheme === "light";
+  const isDark = mounted && resolvedTheme === "dark";
   const src = compact
     ? siteConfig.assets.logoMark
-    : isLight
-      ? siteConfig.assets.logoLight
-      : siteConfig.assets.logoDark;
+    : isDark
+      ? siteConfig.assets.logoDark
+      : siteConfig.assets.logoLight;
 
   if (imgError) {
     return (

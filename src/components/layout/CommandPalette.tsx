@@ -8,6 +8,7 @@ import {
   Check,
   Copy,
   Mail,
+  MessageCircle,
   Moon,
   Search,
   Send,
@@ -16,7 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { mainNav } from "@/config/navigation";
-import { siteConfig } from "@/config/site";
+import { getWhatsAppUrl, siteConfig } from "@/config/site";
 import { services } from "@/content/services";
 import { copyToClipboard } from "@/lib/utils";
 
@@ -91,6 +92,20 @@ export function CommandPalette() {
     }));
 
     const quickActions: PaletteItem[] = [
+      {
+        id: "action-whatsapp",
+        group: "Quick Actions",
+        label: "Chat on WhatsApp",
+        hint: "WhatsApp",
+        action: () => {
+          window.open(
+            getWhatsAppUrl("Hi Team Klien Codes, I have an inquiry."),
+            "_blank",
+            "noopener,noreferrer"
+          );
+          setOpen(false);
+        },
+      },
       {
         id: "action-query",
         group: "Quick Actions",
@@ -230,6 +245,8 @@ export function CommandPalette() {
                       ) : (
                         <Copy className="h-4 w-4 text-[var(--accent-text)]" />
                       )
+                    ) : item.id === "action-whatsapp" ? (
+                      <MessageCircle className="h-4 w-4 text-[var(--accent-text)]" />
                     ) : item.id === "action-email" ? (
                       <Mail className="h-4 w-4 text-[var(--accent-text)]" />
                     ) : item.id === "action-query" ? (

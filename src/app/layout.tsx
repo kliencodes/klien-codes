@@ -32,8 +32,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#070707" },
     { media: "(prefers-color-scheme: light)", color: "#faf8f8" },
+    { media: "(prefers-color-scheme: dark)", color: "#070707" },
   ],
 };
 
@@ -76,7 +76,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <Suspense fallback={null}>
             <TopLoader />
           </Suspense>

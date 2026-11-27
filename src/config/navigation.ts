@@ -8,7 +8,7 @@ export const mainNav: NavItem[] = [
   { label: "Home", href: "/", description: "Overview of Klien Codes" },
   { label: "Services", href: "/services", description: "What we build and support" },
   { label: "Work", href: "/work", description: "Sample projects & solutions" },
-  { label: "Achievements", href: "/achievements", description: "100+ projects & 50+ engineers" },
+  { label: "Achievements", href: "/achievements", description: "50+ projects in 3 years" },
   { label: "About", href: "/about", description: "Our story & team across India" },
   { label: "Insights", href: "/insights", description: "Helpful IT guides & checklists" },
 ];

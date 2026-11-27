@@ -7,7 +7,7 @@ import { Reveal } from "@/components/motion/Reveal";
 export const metadata: Metadata = {
   title: "Achievements",
   description:
-    "100+ projects delivered over 6 years by Team Klien Codes—50+ specialized engineers working virtually and in-office across India.",
+    "50+ projects delivered over 3 years by Team Klien Codes—50+ specialized engineers working virtually and in-office across India.",
 };
 
 const highlights = [
@@ -18,7 +18,7 @@ const highlights = [
     icon: Users,
   },
   {
-    title: "100+ Projects Shipped in 6 Years",
+    title: "50+ Projects Shipped in 3 Years",
     description:
       "From fast-moving startup launches to complex business modernizations, we have consistently delivered dependable software and IT infrastructure on clear timelines.",
     icon: ShieldCheck,
@@ -46,7 +46,7 @@ export default function AchievementsPage() {
             MILESTONES // KLIEN CODES
           </span>
           <h1 className="mt-3 font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-            6 Years, 100+ Projects, and 50+ Engineers Stronger
+            3 Years, 50+ Projects, and 50+ Engineers Stronger
           </h1>
           <p className="mt-4 text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
             At Klien Codes, our growth comes from long-term client trust,

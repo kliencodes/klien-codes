@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Mail, MapPin, ShieldCheck } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { Mail, MapPin, MessageCircle, ShieldCheck } from "lucide-react";
+import { getWhatsAppUrl, siteConfig } from "@/config/site";
 import { AvailabilityBadge } from "@/components/brand/AvailabilityBadge";
 import { ContactIntakeForm } from "@/components/interactive/ContactIntakeForm";
 
 export const metadata: Metadata = {
   title: "Contact Team Klien Codes",
   description:
-    "Contact Team Klien Codes via email, quick query, or detailed project brief.",
+    "Contact Team Klien Codes via WhatsApp, email, quick query, or detailed project brief.",
 };
 
 export default function ContactPage() {
@@ -21,12 +21,34 @@ export default function ContactPage() {
             Contact {siteConfig.teamName}
           </h1>
           <p className="text-base leading-relaxed text-[var(--text-secondary)]">
-            Have a quick question or a full project in mind? Email us directly
-            or submit your query right here—our team responds within 1 business
-            day.
+            Have a quick question or a full project in mind? Chat with us on
+            WhatsApp, email us directly, or submit your query right here—our
+            team responds within 1 business day.
           </p>
 
           <div className="space-y-3 border-t border-[var(--border-subtle)] pt-6">
+            <a
+              href={getWhatsAppUrl("Hi Team Klien Codes, I have an inquiry.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-[56px] items-center justify-between rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface-1)] px-4 py-3 transition-colors hover:border-[var(--accent-primary)]"
+            >
+              <span className="flex items-center gap-3">
+                <MessageCircle className="h-5 w-5 text-[var(--accent-text)]" />
+                <span className="text-left">
+                  <span className="block text-xs text-[var(--text-muted)]">
+                    WhatsApp
+                  </span>
+                  <span className="text-sm font-semibold text-[var(--text-primary)]">
+                    Chat on WhatsApp
+                  </span>
+                </span>
+              </span>
+              <span className="font-mono text-xs text-[var(--accent-text)]">
+                OPEN →
+              </span>
+            </a>
+
             <a
               href={`mailto:${siteConfig.contactEmail}`}
               className="flex min-h-[56px] items-center justify-between rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface-1)] px-4 py-3 transition-colors hover:border-[var(--accent-primary)]"

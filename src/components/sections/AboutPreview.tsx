@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 import { Reveal } from "@/components/motion/Reveal";
 
 const principles = [
-  "100+ projects successfully delivered over the past 6 years.",
+  "50+ projects successfully delivered over the past 3 years.",
   "50+ specialized engineers working both virtually and in-office across India.",
   "Plain-English communication, honest timelines, and 100% client ownership.",
 ];
@@ -33,7 +33,7 @@ export function AboutPreview() {
               through confusing jargon or bloated agencies just to get reliable
               software and IT infrastructure. Today, our team of 50+ specialized
               engineers works both virtually and from offices across India—having
-              delivered 100+ projects over 6 years with transparent pricing and
+              delivered 50+ projects over 3 years with transparent pricing and
               zero lock-in.
             </p>
 
@@ -49,14 +49,13 @@ export function AboutPreview() {
               ))}
             </ul>
 
-            {/* MD Name ONLY at the end of the About message */}
             <div className="mt-8 flex flex-col justify-between gap-4 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-end">
               <div>
                 <p className="font-display text-xl font-semibold text-[var(--text-primary)]">
-                  — {siteConfig.mdName}
+                  — {siteConfig.mdTitle}
                 </p>
                 <p className="mt-0.5 font-mono text-xs text-[var(--accent-text)]">
-                  {siteConfig.mdTitle}
+                  {siteConfig.brandName}
                 </p>
               </div>
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Mail } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { ArrowRight, Mail, MessageCircle } from "lucide-react";
+import { getWhatsAppUrl, siteConfig } from "@/config/site";
 import { AvailabilityBadge } from "@/components/brand/AvailabilityBadge";
 import { LiveArchitectureDiagram } from "@/components/interactive/LiveArchitectureDiagram";
 import { Reveal } from "@/components/motion/Reveal";
@@ -36,11 +36,21 @@ export function HeroSection() {
               <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:items-center">
                 <Link
                   href="/contact"
-                  className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-[var(--accent-primary)] px-6 text-sm font-semibold text-[#FAFAFA] shadow-lg shadow-red-950/30 transition-all hover:-translate-y-0.5 hover:bg-[var(--accent-primary-hover)] active:scale-[0.98]"
+                  className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-[var(--accent-primary)] px-6 text-sm font-semibold text-[#FAFAFA] shadow-lg shadow-red-950/20 transition-all hover:-translate-y-0.5 hover:bg-[var(--accent-primary-hover)] active:scale-[0.98]"
                 >
                   <span>Send a Query or Project Brief</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+
+                <a
+                  href={getWhatsAppUrl("Hi Team Klien Codes, I'd like to discuss a project.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-[var(--border-strong)] bg-[var(--bg-surface-1)] px-5 text-sm font-medium text-[var(--text-primary)] transition-all hover:border-[var(--accent-primary)] active:scale-[0.98]"
+                >
+                  <MessageCircle className="h-4 w-4 text-[var(--accent-text)]" />
+                  <span>WhatsApp</span>
+                </a>
 
                 <a
                   href={`mailto:${siteConfig.contactEmail}`}

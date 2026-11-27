@@ -4,15 +4,15 @@ import { Reveal } from "@/components/motion/Reveal";
 
 const stats = [
   {
-    value: "100+",
+    value: "50+",
     label: "Projects Delivered",
     detail: "Successfully shipped across startups, SMEs, and enterprises.",
     icon: CheckCircle2,
   },
   {
-    value: "6 Years",
+    value: "3 Years",
     label: "Proven Track Record",
-    detail: "Six years of consistent engineering and IT consultancy delivery.",
+    detail: "Three years of consistent engineering and IT consultancy delivery.",
     icon: Award,
   },
   {
