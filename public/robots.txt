@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://battak.publicvm.com/sitemap.xml
+Sitemap: https://www.kliencodes.com/sitemap.xml

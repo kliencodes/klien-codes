@@ -28,6 +28,15 @@ export interface StoredBrief {
   brief: string;
 }
 
+export type BotStep = "idle" | "awaiting_name" | "awaiting_contact" | "awaiting_query";
+
+export interface WhatsAppSession {
+  phone: string;
+  step: BotStep;
+  draftName: string;
+  draftContact: string;
+}
+
 function getSql() {
   const url = process.env.DATABASE_URL || process.env.POSTGRES_URL;
   return url ? neon(url) : null;
@@ -64,6 +73,16 @@ async function ensureTables() {
     )
   `;
 
+  await sql`
+    CREATE TABLE IF NOT EXISTS whatsapp_sessions (
+      phone TEXT PRIMARY KEY,
+      step TEXT NOT NULL DEFAULT 'idle',
+      draft_name TEXT NOT NULL DEFAULT '',
+      draft_contact TEXT NOT NULL DEFAULT '',
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+
   tablesReady = true;
 }
 
@@ -87,6 +106,69 @@ async function appendLocalJson<T>(filename: string, record: T): Promise<T> {
     "utf8"
   );
   return record;
+}
+
+const memorySessions = new Map<string, WhatsAppSession>();
+
+export async function getWhatsAppSession(phone: string): Promise<WhatsAppSession> {
+  const sql = getSql();
+  if (sql) {
+    await ensureTables();
+    const rows = await sql`
+      SELECT phone, step, draft_name, draft_contact
+      FROM whatsapp_sessions
+      WHERE phone = ${phone}
+      LIMIT 1
+    `;
+    if (rows.length > 0) {
+      const r = rows[0];
+      return {
+        phone: String(r.phone),
+        step: (String(r.step) as BotStep) || "idle",
+        draftName: String(r.draft_name || ""),
+        draftContact: String(r.draft_contact || ""),
+      };
+    }
+    return { phone, step: "idle", draftName: "", draftContact: "" };
+  }
+
+  return (
+    memorySessions.get(phone) || {
+      phone,
+      step: "idle",
+      draftName: "",
+      draftContact: "",
+    }
+  );
+}
+
+export async function saveWhatsAppSession(session: WhatsAppSession): Promise<void> {
+  const sql = getSql();
+  if (sql) {
+    await ensureTables();
+    await sql`
+      INSERT INTO whatsapp_sessions (phone, step, draft_name, draft_contact, updated_at)
+      VALUES (${session.phone}, ${session.step}, ${session.draftName}, ${session.draftContact}, NOW())
+      ON CONFLICT (phone)
+      DO UPDATE SET
+        step = EXCLUDED.step,
+        draft_name = EXCLUDED.draft_name,
+        draft_contact = EXCLUDED.draft_contact,
+        updated_at = NOW()
+    `;
+    return;
+  }
+
+  memorySessions.set(session.phone, session);
+}
+
+export async function clearWhatsAppSession(phone: string): Promise<void> {
+  await saveWhatsAppSession({
+    phone,
+    step: "idle",
+    draftName: "",
+    draftContact: "",
+  });
 }
 
 export async function saveQuickQuery(input: {
